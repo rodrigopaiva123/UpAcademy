@@ -1,6 +1,6 @@
-package io.altar.jseproject.textinterface;
+package src.io.altar.jseproject.textinterface;
 
-import io.altar.jseproject.textinterface.State;
+import src.io.altar.jseproject.textinterface.State;
 
 public class EditProductScreen extends State{
 	public int on() {

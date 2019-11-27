@@ -1,12 +1,12 @@
-package io.altar.jseproject.textinterface;
+package src.io.altar.jseproject.textinterface;
 
 import java.util.Collection;
 
-import io.altar.jseproject.model.Product;
-import io.altar.jseproject.model.Shelf;
-import io.altar.jseproject.repositories.ProductRepository;
-import io.altar.jseproject.repositories.ShelfRepository;
-import io.altar.jseproject.utils.ScannerUtils;
+import src.io.altar.jseproject.model.Product;
+import src.io.altar.jseproject.model.Shelf;
+import src.io.altar.jseproject.repositories.ProductRepository;
+import src.io.altar.jseproject.repositories.ShelfRepository;
+import src.io.altar.jseproject.utils.ScannerUtils;
 
 abstract class State {
 	static ScannerUtils scUtil = new ScannerUtils();

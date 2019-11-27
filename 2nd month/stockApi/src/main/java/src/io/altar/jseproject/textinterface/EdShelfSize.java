@@ -1,6 +1,6 @@
-package io.altar.jseproject.textinterface;
+package src.io.altar.jseproject.textinterface;
 
-import io.altar.jseproject.model.Shelf;
+import src.io.altar.jseproject.model.Shelf;
 
 public class EdShelfSize extends State {
 	public int on() {

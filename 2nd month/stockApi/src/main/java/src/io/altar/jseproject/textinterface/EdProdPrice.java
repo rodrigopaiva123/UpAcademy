@@ -1,6 +1,6 @@
-package io.altar.jseproject.textinterface;
+package src.io.altar.jseproject.textinterface;
 
-import io.altar.jseproject.model.Product;
+import src.io.altar.jseproject.model.Product;
 
 public class EdProdPrice extends State{
 	public int on() {

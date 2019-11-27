@@ -1,7 +1,7 @@
-package io.altar.jseproject.textinterface;
+package src.io.altar.jseproject.textinterface;
 
-import io.altar.jseproject.model.Product;
-import io.altar.jseproject.model.Shelf;
+import src.io.altar.jseproject.model.Product;
+import src.io.altar.jseproject.model.Shelf;
 
 public class EdProdShelfs extends State{
 	public int on() {
