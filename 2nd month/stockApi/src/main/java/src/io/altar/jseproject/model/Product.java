@@ -6,7 +6,7 @@ public class Product extends Entity{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public ArrayList<Long> shelfIds = new ArrayList<Long>();
+	private ArrayList<Long> shelfIds = new ArrayList<Long>();
 	private float price;
 	private float IVA;
 	private float PVP;
@@ -14,23 +14,22 @@ public class Product extends Entity{
 	public Product () {
 	}
 	
-	
+
 	public Product (float price, float IVA) {
 		super();
 		this.price = price;
 		this.IVA = IVA;
-		this.PVP = (price + (price * (IVA/100)));
+		this.PVP = (this.price + (this.price * (this.IVA/100)));
 	}
 
 	
 
-	public ArrayList<Long> getShelfs() {
+	public ArrayList<Long> getShelfIds() {
 		return shelfIds;
 	}
 
-
-	public void setShelfs(ArrayList<Long> shelfs) {
-		this.shelfIds = shelfs;
+	public void setShelfIds(ArrayList<Long> shelfIds) {
+		this.shelfIds = shelfIds;
 	}
 
 
@@ -41,6 +40,7 @@ public class Product extends Entity{
 
 	public void setPrice(float price) {
 		this.price = price;
+		this.PVP = (this.price + (this.price * (this.IVA/100)));
 	}
 
 
@@ -52,17 +52,18 @@ public class Product extends Entity{
 
 	public void setIVA(float iVA) {
 		IVA = iVA;
+		this.PVP = (this.price + (this.price * (this.IVA/100)));
 	}
 
 
 	public float getPVP() {
 		return PVP;
 	}
-
+	
 
 	@Override
 	public String toString() {
-		return "Product id: " + id + ", price: " + price + ", IVA: " + IVA + ", PVP: " + PVP + ", Shelfs: " + shelfIds;
+		return "Product id: " + getId() + ", price: " + price + ", IVA: " + IVA + ", PVP: " + PVP + ", Shelfs: " + shelfIds;
 	}
 
 	

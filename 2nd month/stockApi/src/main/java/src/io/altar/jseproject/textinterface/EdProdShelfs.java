@@ -10,7 +10,7 @@ public class EdProdShelfs extends State{
 			long shelfId = scUtil.getInt("Indique o ID de uma nova prateleira para o produto");
 			Shelf shelf = bdShelf.getEntity(shelfId);
 			shelf.setProduct(product);
-			product.shelfIds.add(shelfId);
+			product.getShelfIds().add(shelfId);
 			bdProduct.editEntity(product);
 		}
 		return 1;

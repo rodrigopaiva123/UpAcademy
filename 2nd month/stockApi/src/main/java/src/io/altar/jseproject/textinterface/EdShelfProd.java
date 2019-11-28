@@ -11,7 +11,7 @@ public class EdShelfProd extends State{
 			Product product = bdProduct.getEntity(productId);
 			shelf.setProduct(product);
 			bdShelf.editEntity(shelf);
-			product.shelfIds.add(productId);
+			product.getShelfIds().add(productId);
 		}
 		return 1;
 	}

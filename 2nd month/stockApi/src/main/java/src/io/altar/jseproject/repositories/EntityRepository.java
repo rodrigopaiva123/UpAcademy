@@ -19,7 +19,7 @@ public class EntityRepository<T extends Entity>{
 	}
 	
 	public long createEntity (T entity) {
-		entity.id = returnLastId();
+		entity.setId(returnLastId());
 		baseDeDados.put(currentId, entity);
 		return currentId;
 	}
@@ -37,7 +37,7 @@ public class EntityRepository<T extends Entity>{
 	}
 	
 	public void editEntity(T editedEntity) {
-		baseDeDados.put(editedEntity.id, editedEntity);
+		baseDeDados.put(editedEntity.getId(), editedEntity);
 	}
 	
 	public void removeEntity(long id) {

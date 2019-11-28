@@ -22,10 +22,10 @@ public class ProductController extends  EntityController<ProductService, Product
 	ProductService service = new ProductService();
 	
 	@GET
-	@Path("healthcheck")
+	@Path("healthCheck")
 	@Produces("text/plain")
 	public String healthcheck() {
-		return "O controller esta em cima";
+		return "Controller ok";
 	}
 	
 	@GET
@@ -45,21 +45,21 @@ public class ProductController extends  EntityController<ProductService, Product
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public long post(Product product) {
-		return service.post(product);
+		return service.create(product);
 	}
 	
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void put(@PathParam("id") long id, Product product) {
-		service.put(product);
+	public String put(@PathParam("id") long id, Product product) {
+		return service.edit(id, product);
 	}
 	
 	@DELETE
-	@Path("1")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void del(long id) {
+	public void del(@PathParam("id") long id) {
 		service.del(id);
 	}
 }

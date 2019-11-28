@@ -184,7 +184,7 @@ public class TextInterface {
 		long editedShelfId = scUtil.getInt("Indique o ID de uma nova prateleira para o produto");
 		Shelf editedShelf = bdShelf.getEntity(editedShelfId);
 		editedShelf.setProduct(editedProduct);
-		editedProduct.shelfIds.add(editedShelfId);
+		editedProduct.getShelfIds().add(editedShelfId);
 		bdProduct.editEntity(editedProduct);
 		productScreen();
 	}
@@ -197,11 +197,11 @@ public class TextInterface {
 	
 	static void removeProduct() {
 		Product product = getProduct();
-		for (long shelfId : product.shelfIds) {
+		for (long shelfId : product.getShelfIds()) {
 			Shelf shelf = bdShelf.getEntity(shelfId);
 			shelf.setProduct(null);
 		}
-		bdProduct.removeEntity(product.id);
+		bdProduct.removeEntity(product.getId());
 		productScreen();
 	}
 	
@@ -245,7 +245,7 @@ public class TextInterface {
 		Product editedProduct = bdProduct.getEntity(editedProductId);
 		editedShelf.setProduct(editedProduct);
 		bdShelf.editEntity(editedShelf);
-		editedProduct.shelfIds.add(editedProductId);
+		editedProduct.getShelfIds().add(editedProductId);
 		shelfScreen();
 	}
 	
@@ -257,14 +257,14 @@ public class TextInterface {
 	
 	static void removeShelfs() {
 		Shelf shelf = getShelf();
-		long pId = shelf.product.id;
+		long pId = shelf.getProduct().getId();
 		Product product = bdProduct.getEntity(pId);
-		for (long shelfId : product.shelfIds) {
-			if (shelf.id == shelfId) {
-				product.shelfIds.remove(shelfId);
+		for (long shelfId : product.getShelfIds()) {
+			if (shelf.getId() == shelfId) {
+				product.getShelfIds().remove(shelfId);
 			}
 		}
-		bdShelf.removeEntity(shelf.id);
+		bdShelf.removeEntity(shelf.getId());
 		shelfScreen();
 	}
 	

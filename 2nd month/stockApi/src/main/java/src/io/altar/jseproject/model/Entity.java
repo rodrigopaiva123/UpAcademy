@@ -6,13 +6,17 @@ public class Entity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public long id;
+	private long id;
 
 	public Entity () {
 	}
 
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

@@ -6,11 +6,11 @@ import src.io.altar.jseproject.model.Shelf;
 public class RemoveProduct extends State{
 	public int on() {
 		Product product = getProduct();
-		for (long shelfId : product.shelfIds) {
+		for (long shelfId : product.getShelfIds()) {
 			Shelf shelf = bdShelf.getEntity(shelfId);
 			shelf.setProduct(null);
 		}
-		bdProduct.removeEntity(product.id);
+		bdProduct.removeEntity(product.getId());
 		return 1;
 	}
 }
