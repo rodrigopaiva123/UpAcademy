@@ -7,13 +7,12 @@ import javax.inject.Inject;
 import src.io.altar.jseproject.model.Product;
 import src.io.altar.jseproject.model.Shelf;
 import src.io.altar.jseproject.repositories.ProductRepository;
-import src.io.altar.jseproject.repositories.ShelfRepository;
 
 public class ProductService extends EntityService<ProductRepository, Product>{
 	
 	ProductRepository productRep = ProductRepository.getInstance();
 	@Inject
-	ShelfRepository shelfRep;
+	ShelfService shelfService;
 	
 
 	public Collection<Product>  getAll() {
@@ -30,6 +29,7 @@ public class ProductService extends EntityService<ProductRepository, Product>{
 	}
 	
 	public String edit(long id, Product product) {
+		
 		String str = "error: ID";
 		Collection<Long> ids = productRep.getAllIds();
 		if (id == (product.getId()==0? id : product.getId()) && ids.contains(id)) {
@@ -37,11 +37,6 @@ public class ProductService extends EntityService<ProductRepository, Product>{
 			productRep.editEntity(product);
 			str = "Product edited";
 			
-//			for (long shelfId : product.getShelfIds()) {
-//				Shelf shelf = shelfRep.getEntity(shelfId);
-//				shelf.setProduct(product);
-//				shelfRep.editEntity(shelf);
-//			}
 			
 		}
 		return str;
@@ -49,7 +44,25 @@ public class ProductService extends EntityService<ProductRepository, Product>{
 	
 	public void del(long id) {
 		productRep.removeEntity(id);
+		removeProductInShelf(id);
 	}
 
+	
+	public void removeProductInShelf(long id) {
+		Collection<Shelf> shelfs =  shelfService.getAll();
+		for (Shelf shelf : shelfs) {
+			if (shelf.getProductId() == id) {
+				shelf.setProductId(0);
+				shelfService.edit(id, shelf);
+			}
+		}
+	}
+	
+	public void addProductToShelf(long prodId, long shelfId) {
+		
+		shelf.setProductId(id);
+		shelfService.edit(prodId, shelfId);
+	}
+	
 
 }

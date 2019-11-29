@@ -5,7 +5,7 @@ public class Shelf extends Entity {
 	private static final long serialVersionUID = 1L;
 	
 	private int size;
-	private Product product;
+	private int productId;
 	private float price;
 	
 	public Shelf () {
@@ -37,13 +37,13 @@ public class Shelf extends Entity {
 		this.price = price;
 	}
 	
-	public Product getProduct() {
-		return product;
+	public int getProductId() {
+		return productId;
 	}
 
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 	
 	
@@ -51,10 +51,10 @@ public class Shelf extends Entity {
 	@Override
 	public String toString() {
 		String msg = "";
-		if (product == null) {
+		if (productId == 0) {
 			msg = "Shelf id: " + getId() + ", size: " + size + ", price: " + price + ", product: empty";
 		} else {
-			msg = "Shelf id: " + getId() + ", size: " + size + ", price: " + price + ", product: " + product;
+			msg = "Shelf id: " + getId() + ", size: " + size + ", price: " + price + ", product: " + productId;
 		}
 		
 		return msg;

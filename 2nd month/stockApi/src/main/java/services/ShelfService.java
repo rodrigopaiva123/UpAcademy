@@ -5,14 +5,13 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import src.io.altar.jseproject.model.Shelf;
-import src.io.altar.jseproject.repositories.ProductRepository;
 import src.io.altar.jseproject.repositories.ShelfRepository;
 
 public class ShelfService extends EntityService<ShelfRepository, Shelf>{
 
 	ShelfRepository shelfRep = ShelfRepository.getInstance();
 	@Inject
-	ProductRepository productRep;
+	ProductService productService;
 
 	public Collection<Shelf>  getAll() {
 		return shelfRep.getAllEntities();
