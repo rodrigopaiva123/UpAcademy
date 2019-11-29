@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.inject.Inject;
@@ -19,6 +20,18 @@ public class ShelfService extends EntityService<ShelfRepository, Shelf>{
 	
 	public Shelf getOne(long id) {
 		return shelfRep.getEntity(id);
+	}
+	
+	public Collection<Shelf> getByProductId(long id) {
+		Collection<Shelf> shelves = new ArrayList<Shelf>();
+		
+		for (Shelf shelf : shelfRep.getAllEntities()) {
+			if (shelf.getProductId() == id) {
+				shelves.add(shelf);
+			}
+		}
+		
+		return shelves;
 	}
 	
 	public long create (Shelf entity) {

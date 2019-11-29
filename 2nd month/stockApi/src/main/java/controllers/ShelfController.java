@@ -41,6 +41,13 @@ public class ShelfController extends  EntityController<ShelfService, ShelfReposi
 		return service.getOne(id);
 	}
 	
+	@GET
+	@Path("/product/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Shelf> getByProductId(@PathParam("id") long id) {
+		return service.getByProductId(id);
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

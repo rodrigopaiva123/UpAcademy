@@ -37,6 +37,13 @@ public class ProductService extends EntityService<ProductRepository, Product>{
 			productRep.editEntity(product);
 			str = "Product edited";
 			
+			for(Shelf shelf : shelfService.getAll()) {
+				if (product.getShelfIds().contains(shelf.getId())) {
+					addProductToShelf(id, shelf.getId());
+				} else if (shelf.getProductId() == id) {
+					removeProductInShelf(shelf);
+				}
+			}
 			
 		}
 		return str;
@@ -44,24 +51,23 @@ public class ProductService extends EntityService<ProductRepository, Product>{
 	
 	public void del(long id) {
 		productRep.removeEntity(id);
-		removeProductInShelf(id);
-	}
-
-	
-	public void removeProductInShelf(long id) {
-		Collection<Shelf> shelfs =  shelfService.getAll();
-		for (Shelf shelf : shelfs) {
+		
+		for (Shelf shelf : shelfService.getAll()) {
 			if (shelf.getProductId() == id) {
-				shelf.setProductId(0);
-				shelfService.edit(id, shelf);
+				removeProductInShelf(shelf);
 			}
 		}
 	}
 	
+	public void removeProductInShelf(Shelf shelf) {
+		shelf.setProductId(0);
+		shelfService.edit(shelf.getId(), shelf);
+	}
+	
 	public void addProductToShelf(long prodId, long shelfId) {
-		
-		shelf.setProductId(id);
-		shelfService.edit(prodId, shelfId);
+		Shelf shelf = shelfService.getOne(shelfId);
+		shelf.setProductId(prodId);
+		shelfService.edit(shelfId, shelf);
 	}
 	
 

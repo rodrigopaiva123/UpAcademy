@@ -5,7 +5,7 @@ public class Shelf extends Entity {
 	private static final long serialVersionUID = 1L;
 	
 	private int size;
-	private int productId;
+	private long productId;
 	private float price;
 	
 	public Shelf () {
@@ -37,12 +37,12 @@ public class Shelf extends Entity {
 		this.price = price;
 	}
 	
-	public int getProductId() {
+	public long getProductId() {
 		return productId;
 	}
 
 
-	public void setProductId(int productId) {
+	public void setProductId(long productId) {
 		this.productId = productId;
 	}
 	
