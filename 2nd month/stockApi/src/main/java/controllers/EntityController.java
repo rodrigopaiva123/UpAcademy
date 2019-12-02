@@ -54,7 +54,7 @@ public abstract class EntityController<T extends EntityService<R,E>, R extends E
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.TEXT_PLAIN)
 		public String put(@PathParam("id") long id, E entity) {
-			return service.edit(id, entity);
+			return service.edit(id, entity, true);
 		}
 		
 		@DELETE

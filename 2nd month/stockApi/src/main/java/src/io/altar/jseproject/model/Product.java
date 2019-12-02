@@ -1,12 +1,13 @@
 package src.io.altar.jseproject.model;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Product extends Entity{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<Long> shelfIds = new ArrayList<Long>();
+	private Set<Long> shelfIds = new HashSet<Long>();
 	private float price;
 	private float IVA;
 	private float PVP;
@@ -24,11 +25,11 @@ public class Product extends Entity{
 
 	
 
-	public ArrayList<Long> getShelfIds() {
+	public Set<Long> getShelfIds() {
 		return shelfIds;
 	}
 
-	public void setShelfIds(ArrayList<Long> shelfIds) {
+	public void setShelfIds(HashSet<Long> shelfIds) {
 		this.shelfIds = shelfIds;
 	}
 

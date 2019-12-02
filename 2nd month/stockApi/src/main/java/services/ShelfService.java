@@ -11,11 +11,11 @@ import src.io.altar.jseproject.model.Shelf;
 import src.io.altar.jseproject.repositories.ShelfRepository;
 
 @RequestScoped
-public class ShelfService extends EntityService<ShelfRepository, Shelf>{
+public class ShelfService extends EntityService<ShelfRepository, Shelf> {
 
 	@Inject
-	ProductService prodService;	
-	
+	ProductService productService;
+
 	public Collection<Shelf> getByProductId(long id) {
 		Collection<Shelf> shelves = new ArrayList<Shelf>();
 		for (Shelf shelf : repository.getAllEntities()) {
@@ -23,51 +23,66 @@ public class ShelfService extends EntityService<ShelfRepository, Shelf>{
 				shelves.add(shelf);
 			}
 		}
-		
+
 		return shelves;
 	}
-	
+
 	@Override
-	public String edit(long id, Shelf shelf) {
+	public String edit(long shelfId, Shelf shelf, boolean needsEdit) {
+
 		String str = "error: ID";
-		Collection<Long> ids = repository.getAllIds();
-		if (id == (shelf.getId()==0? id : shelf.getId()) && ids.contains(id)) {
-			shelf.setId(id);
+		boolean validParams = true;
+
+		if (shelfId == (shelf.getId() == 0 ? shelfId : shelf.getId()) && repository.getAllIds().contains(shelfId)) {
+		} else {
+			str = "error: ID";
+			validParams = false;
+		}
+
+		if (shelf.getProductId() != 0 && productService.getAllIds().contains(shelf.getProductId()) == false && validParams == true) {
+			str = "error: invalid product ID";
+			validParams = false;
+		}
+
+		if (validParams == true) {
+			shelf.setId(shelfId);
 			repository.editEntity(shelf);
 			str = "Shelf edited";
-			
-			
-//			removeShelfFromProduct (id);
-//			addShelfToProduct (shelfId, productId);
-			
-		}
-		return str;
-	}
-	
-	@Override
-	public String del(long id) {
-		repository.removeEntity(id);
-		removeShelfFromProduct (id);
-		return "Shelf deleted";
-	}
-	
-	public void removeShelfFromProduct (long id) {
-		for (Product product : prodService.getAll()) {
-			ArrayList<Long> shelfIds = product.getShelfIds();
-			for (long prodId : shelfIds) {
-				if (prodId == id) {
-					shelfIds.remove(prodId);
+
+			if (needsEdit) {
+				for (Product product : productService.getAll()) {
+					if (product.getId() == shelf.getProductId()) {
+						addShelfToProduct(shelfId, product);
+					} else {
+						removeShelfFromProduct(shelfId, product);
+					}
 				}
 			}
-			prodService.edit(product.getId(), product);
 		}
+
+		return str;
 	}
-	
-	public void addShelfToProduct (long shelfId, long productId) {
-		Product product = prodService.getOne(productId);
-		ArrayList<Long> shelfIds = product.getShelfIds();
-		shelfIds.add(shelfId);
-		product.setShelfIds(shelfIds);
-		prodService.edit(productId, product);
+
+	@Override
+	public String del(long shelfId) {
+		repository.removeEntity(shelfId);
+		for (Product product : productService.getAll()) {
+			removeShelfFromProduct(shelfId, product);
+		}
+		return "Shelf deleted";
+	}
+
+	public void removeShelfFromProduct(long shelfId, Product product) {
+		for (long id : product.getShelfIds()) {
+			if (id == shelfId) {
+				product.getShelfIds().remove(id);
+			}
+		}
+		productService.edit(product.getId(), product, false);
+	}
+
+	public void addShelfToProduct(long shelfId, Product product) {
+		product.getShelfIds().add(shelfId);
+		productService.edit(product.getId(), product, false);
 	}
 }

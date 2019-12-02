@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -17,6 +18,10 @@ public abstract class EntityService<T extends EntityRepository<E>, E extends Ent
 		return repository.getAllEntities();
 	}
 	
+	public Set<Long>  getAllIds() {
+		return repository.getAllIds();
+	}
+	
 	public E getOne(long id) {
 		return repository.getEntity(id);
 	}
@@ -26,12 +31,8 @@ public abstract class EntityService<T extends EntityRepository<E>, E extends Ent
 		return repository.createEntity(entity);
 	}
 	
-	public String edit(long id, E entity) {
-		return "";
-	}
+	public abstract String edit(long id, E entity, boolean isEdit);
 	
-	public String del(long id) {
-		return "";
-	}
+	public abstract String del(long id);
 
 }
