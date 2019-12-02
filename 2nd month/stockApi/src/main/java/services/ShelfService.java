@@ -3,29 +3,22 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+import src.io.altar.jseproject.model.Product;
 import src.io.altar.jseproject.model.Shelf;
 import src.io.altar.jseproject.repositories.ShelfRepository;
 
+@RequestScoped
 public class ShelfService extends EntityService<ShelfRepository, Shelf>{
 
-	ShelfRepository shelfRep = ShelfRepository.getInstance();
 	@Inject
-	ProductService productService;
-
-	public Collection<Shelf>  getAll() {
-		return shelfRep.getAllEntities();
-	}
-	
-	public Shelf getOne(long id) {
-		return shelfRep.getEntity(id);
-	}
+	ProductService prodService;	
 	
 	public Collection<Shelf> getByProductId(long id) {
 		Collection<Shelf> shelves = new ArrayList<Shelf>();
-		
-		for (Shelf shelf : shelfRep.getAllEntities()) {
+		for (Shelf shelf : repository.getAllEntities()) {
 			if (shelf.getProductId() == id) {
 				shelves.add(shelf);
 			}
@@ -34,24 +27,47 @@ public class ShelfService extends EntityService<ShelfRepository, Shelf>{
 		return shelves;
 	}
 	
-	public long create (Shelf entity) {
-		
-		return shelfRep.createEntity(entity);
-	}
-	
+	@Override
 	public String edit(long id, Shelf shelf) {
 		String str = "error: ID";
-		Collection<Long> ids = shelfRep.getAllIds();
+		Collection<Long> ids = repository.getAllIds();
 		if (id == (shelf.getId()==0? id : shelf.getId()) && ids.contains(id)) {
 			shelf.setId(id);
-			shelfRep.editEntity(shelf);
+			repository.editEntity(shelf);
 			str = "Shelf edited";
+			
+			
+//			removeShelfFromProduct (id);
+//			addShelfToProduct (shelfId, productId);
+			
 		}
 		return str;
 	}
 	
-	public void del(long id) {
-		shelfRep.removeEntity(id);
+	@Override
+	public String del(long id) {
+		repository.removeEntity(id);
+		removeShelfFromProduct (id);
+		return "Shelf deleted";
 	}
 	
+	public void removeShelfFromProduct (long id) {
+		for (Product product : prodService.getAll()) {
+			ArrayList<Long> shelfIds = product.getShelfIds();
+			for (long prodId : shelfIds) {
+				if (prodId == id) {
+					shelfIds.remove(prodId);
+				}
+			}
+			prodService.edit(product.getId(), product);
+		}
+	}
+	
+	public void addShelfToProduct (long shelfId, long productId) {
+		Product product = prodService.getOne(productId);
+		ArrayList<Long> shelfIds = product.getShelfIds();
+		shelfIds.add(shelfId);
+		product.setShelfIds(shelfIds);
+		prodService.edit(productId, product);
+	}
 }

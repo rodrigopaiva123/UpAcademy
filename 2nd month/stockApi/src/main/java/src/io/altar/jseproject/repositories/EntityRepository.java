@@ -7,12 +7,11 @@ import java.util.Set;
 import src.io.altar.jseproject.model.Entity;
 
 
-
 public class EntityRepository<T extends Entity>{
 
 	private LinkedHashMap<Long, T> baseDeDados = new LinkedHashMap<Long, T>();
 	
-	public long currentId;
+	protected long currentId;
 	
 	private long returnLastId() {
 		return ++currentId;

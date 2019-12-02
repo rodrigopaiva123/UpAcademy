@@ -2,39 +2,28 @@ package services;
 
 import java.util.Collection;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import src.io.altar.jseproject.model.Product;
 import src.io.altar.jseproject.model.Shelf;
 import src.io.altar.jseproject.repositories.ProductRepository;
 
+@RequestScoped
 public class ProductService extends EntityService<ProductRepository, Product>{
 	
-	ProductRepository productRep = ProductRepository.getInstance();
-	@Inject
-	ShelfService shelfService;
 	
-
-	public Collection<Product>  getAll() {
-		return productRep.getAllEntities();
-	}
+    @Inject
+    ShelfService shelfService;
 	
-	public Product getOne(long id) {
-		return productRep.getEntity(id);
-	}
-	
-	public long create (Product entity) {
-		
-		return productRep.createEntity(entity);
-	}
-	
+	@Override
 	public String edit(long id, Product product) {
 		
 		String str = "error: ID";
-		Collection<Long> ids = productRep.getAllIds();
+		Collection<Long> ids = repository.getAllIds();
 		if (id == (product.getId()==0? id : product.getId()) && ids.contains(id)) {
 			product.setId(id);
-			productRep.editEntity(product);
+			repository.editEntity(product);
 			str = "Product edited";
 			
 			for(Shelf shelf : shelfService.getAll()) {
@@ -49,14 +38,17 @@ public class ProductService extends EntityService<ProductRepository, Product>{
 		return str;
 	}
 	
-	public void del(long id) {
-		productRep.removeEntity(id);
+	@Override
+	public String del(long id) {
+		repository.removeEntity(id);
 		
 		for (Shelf shelf : shelfService.getAll()) {
 			if (shelf.getProductId() == id) {
 				removeProductInShelf(shelf);
 			}
 		}
+		
+		return "Product deleted";
 	}
 	
 	public void removeProductInShelf(Shelf shelf) {
