@@ -1,53 +1,51 @@
 package src.io.altar.jseproject.repositories;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Set;
 
-import src.io.altar.jseproject.model.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import src.io.altar.jseproject.model.GenericEntity;
 
 
-public class EntityRepository<T extends Entity>{
-
-	private LinkedHashMap<Long, T> baseDeDados = new LinkedHashMap<Long, T>();
+public abstract class EntityRepository<T extends GenericEntity>{
 	
-	protected long currentId;
+	@PersistenceContext
+	protected EntityManager entityManager;
 	
-	private long returnLastId() {
-		return ++currentId;
-	}
-	
-	public long createEntity (T entity) {
-		entity.setId(returnLastId());
-		baseDeDados.put(currentId, entity);
-		return currentId;
-	}
-	
-	public Set<Long> getAllIds() {
-		return baseDeDados.keySet();
-	}
-	
-	public Collection<T> getAllEntities() {
-		return baseDeDados.values();
+	public T createEntity (T entity) {
+		return entityManager.merge(entity);
 	}
 	
 	public T getEntity(long id) {
-		return baseDeDados.get(id);
+		return entityManager.find(getEntityClass(), id);
 	}
 	
-	public void editEntity(T editedEntity) {
-		baseDeDados.put(editedEntity.getId(), editedEntity);
+	public Collection<Long> getAllIds() {
+		return entityManager.createNamedQuery(getAllEntityIdsQueryName(), Long.class).getResultList();
+	}
+	
+	protected abstract String getAllEntityIdsQueryName();
+	
+
+	public Collection<T> getAllEntities() {
+		return entityManager.createNamedQuery(getAllEntityQueryName(), getEntityClass()).getResultList();
+	}
+
+
+	protected abstract Class<T> getEntityClass();
+	
+	protected abstract String getAllEntityQueryName();
+	
+	
+	public T editEntity(T editedEntity) {
+		return entityManager.merge(editedEntity);
 	}
 	
 	public void removeEntity(long id) {
-		baseDeDados.remove(id);
+		T entity = entityManager.find(getEntityClass(), id);
+		entityManager.remove(entity);
 	}
-
-	@Override
-	public String toString() {
-		return "EntityRepository [baseDeDados=" + baseDeDados + ", currentId=" + currentId + "]";
-	}
-	
 	
 	
 }

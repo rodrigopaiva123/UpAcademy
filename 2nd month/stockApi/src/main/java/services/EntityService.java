@@ -1,32 +1,35 @@
 package services;
 
 import java.util.Collection;
-import java.util.Set;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
-import src.io.altar.jseproject.model.Entity;
+import src.io.altar.jseproject.model.GenericEntity;
 import src.io.altar.jseproject.repositories.EntityRepository;
 
-public abstract class EntityService<T extends EntityRepository<E>, E extends Entity> {
+public abstract class EntityService<T extends EntityRepository<E>, E extends GenericEntity> {
 	
 	@Inject
 	protected T repository;
 	
-
+	@Transactional
 	public Collection<E>  getAll() {
 		return repository.getAllEntities();
 	}
 	
-	public Set<Long>  getAllIds() {
+	@Transactional
+	public Collection<Long>  getAllIds() {
 		return repository.getAllIds();
 	}
 	
+	@Transactional
 	public E getOne(long id) {
 		return repository.getEntity(id);
 	}
 	
-	public long create (E entity) {
+	@Transactional
+	public E create (E entity) {
 		
 		return repository.createEntity(entity);
 	}
