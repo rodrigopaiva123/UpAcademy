@@ -32,7 +32,7 @@ public class ShelfService extends EntityService<ShelfRepository, Shelf> {
 	@Override
 	public String edit(long shelfId, Shelf shelf, boolean needsEdit) {
 
-		String str = "error: ID";
+		String str = "";
 		boolean validParams = false;
 
 		if (shelfId == (shelf.getId() == 0 ? shelfId : shelf.getId()) && repository.getAllIds().contains(shelfId)) {
@@ -41,7 +41,7 @@ public class ShelfService extends EntityService<ShelfRepository, Shelf> {
 			str = "error: ID";
 		}
 
-		if (shelf.getProduct().getId() != 0 && productService.getAllIds().contains(shelf.getProduct().getId()) == false && validParams == true) {
+		if (shelf.getProduct() != null && productService.getAllIds().contains(shelf.getProduct().getId()) == false && validParams == true) {
 			str = "error: invalid product ID";
 			validParams = false;
 		}

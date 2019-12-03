@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import src.io.altar.jseproject.model.Product;
 import src.io.altar.jseproject.model.Shelf;
 
 @ApplicationScoped
@@ -29,7 +28,7 @@ public class ShelfRepository extends EntityRepository<Shelf>{
 
 	@Override
 	protected String getAllEntityIdsQueryName() {
-		return Product.GET_ALL_PRODUCTS_QUERY_NAME;
+		return Shelf.GET_ALL_SHELVES_IDS;
 	}
 	
 }

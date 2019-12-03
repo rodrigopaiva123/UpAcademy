@@ -53,7 +53,7 @@ public abstract class EntityController<T extends EntityService<R,E>, R extends E
 		@Produces(MediaType.TEXT_PLAIN)
 		public Response post(E entity) {
 			service.create(entity);
-			return Response.ok().build();
+			return Response.ok("Created Successfully").build();
 		}
 		
 		@PUT
@@ -78,7 +78,7 @@ public abstract class EntityController<T extends EntityService<R,E>, R extends E
 		public Response del(@PathParam("id") long id) {
 			//return service.del(id);
 			service.del(id);
-			return Response.ok().build();
+			return Response.ok("Deleted Successfully").build();
 		}
 	
 }
