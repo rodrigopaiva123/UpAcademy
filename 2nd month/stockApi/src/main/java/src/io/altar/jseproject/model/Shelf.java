@@ -10,6 +10,10 @@ import javax.persistence.NamedQuery;
 @NamedQuery(name=Shelf.GET_ALL_SHELVES_IDS, query="SELECT s.id FROM Shelf s")
 @NamedQuery(name=Shelf.GET_SHELVES_COUNT, query="SELECT COUNT(s) FROM Shelf s")
 @NamedQuery(name=Shelf.GET_SHELVES_IDS_BY_PRODUCT_ID, query="SELECT s.id FROM Shelf s WHERE s.product.id = :productId")
+@NamedQuery(name=Shelf.GET_SHELVES_COUNT_BY_PRODUCT_ID, query="SELECT COUNT(s) FROM Shelf s WHERE s.product.id = :productId")
+@NamedQuery(name=Shelf.UPDATE_SHELF_BY_PRODUCT_ID, query="UPDATE Shelf s SET s.product.id = :productId WHERE s.id = :id")
+
+//@NamedQuery(name=Shelf.UPDATE_SHELF_PRODUCT_TO_NULL, query="UPDATE Shelf s SET s.product = null WHERE s.id = :shelfId AND s.product.id = :productId")
 public class Shelf extends GenericEntity {
 	
 	private static final long serialVersionUID = 1L;
@@ -19,6 +23,8 @@ public class Shelf extends GenericEntity {
 	public static final String GET_ALL_SHELVES_IDS = "Shelf.getAllShelvesIds";
 	public static final String GET_SHELVES_COUNT = "Shelf.getEntityCount";
 	public static final String GET_SHELVES_IDS_BY_PRODUCT_ID = "Shelf.getAllShelvesIdsByProductId";
+	public static final String GET_SHELVES_COUNT_BY_PRODUCT_ID = "Shelf.getShelfCountByProductId";
+	public static final String UPDATE_SHELF_BY_PRODUCT_ID = "Shelf.editProductInShelf";
 	
 	@ManyToOne
 	private Product product;

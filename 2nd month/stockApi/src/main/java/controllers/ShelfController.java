@@ -47,4 +47,12 @@ public class ShelfController extends  EntityController<ShelfService, ShelfReposi
 		return result;
 	}
 	
+	@GET
+	@Path("count")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Long  getCountByProductId(@QueryParam("productId") Integer productId) {
+		return service.getCountByProductId(productId);
+	}
+	
+	
 }

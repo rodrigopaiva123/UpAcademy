@@ -33,12 +33,14 @@ public abstract class EntityService<T extends EntityRepository<E>, E extends Gen
 		return repository.createEntity(entity);
 	}
 	
-	public abstract String edit(long id, E entity, boolean isEdit);
+	public abstract String edit(long id, E entity);
 	
 	public abstract String del(long id);
 
 	public long getCount() {
 		return repository.getCount();
 	}
+
+	public abstract String editProductInShelf(long id, E entity, Long productId);
 
 }

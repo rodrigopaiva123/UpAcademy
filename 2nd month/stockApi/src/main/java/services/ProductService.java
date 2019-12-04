@@ -15,7 +15,7 @@ public class ProductService extends EntityService<ProductRepository, Product> {
 
 	@Transactional
 	@Override
-	public String edit(long id, Product product, boolean needsEdit) {
+	public String edit(long id, Product product) {
 
 		String str = "";
 		boolean validParams = false;
@@ -40,5 +40,11 @@ public class ProductService extends EntityService<ProductRepository, Product> {
 	public String del(long id) {
 		repository.removeEntity(id);
 		return "Product deleted";
+	}
+
+	@Override
+	public String editProductInShelf(long id, Product entity, Long productId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -23,7 +23,7 @@ public class ShelfService extends EntityService<ShelfRepository, Shelf> {
 	
 	@Transactional
 	@Override
-	public String edit(long shelfId, Shelf shelf, boolean needsEdit) {
+	public String edit(long shelfId, Shelf shelf) {
 
 		String str = "";
 		boolean validParams = false;
@@ -57,6 +57,15 @@ public class ShelfService extends EntityService<ShelfRepository, Shelf> {
 
 	public List<Long> getIdByProductId(long id) {
 		return repository.getIdByProductId(id);
+	}
+
+	public Long getCountByProductId(long id) {
+		return repository.getCountByProductId(id);
+	}
+	
+	public String editProductInShelf(long id, Shelf shelf, Long productId) {
+		repository.editProductInShelf(id, shelf, productId);
+		return "Edit Successfull";
 	}
 
 }

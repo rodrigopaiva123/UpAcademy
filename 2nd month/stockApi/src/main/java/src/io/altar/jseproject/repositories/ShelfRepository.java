@@ -43,5 +43,20 @@ public class ShelfRepository extends EntityRepository<Shelf>{
 				.getResultList();
 		
 	}
+
+	public Long getCountByProductId(long id) {
+		return entityManager
+				.createNamedQuery(Shelf.GET_SHELVES_COUNT_BY_PRODUCT_ID, Long.class)
+				.setParameter("productId", id)
+				.getSingleResult().longValue();
+	}
+
+	public void editProductInShelf(long id, Shelf shelf, Long productId) {
+		 entityManager
+			.createNamedQuery(Shelf.UPDATE_SHELF_BY_PRODUCT_ID, Shelf.class)
+			.setParameter("productId", productId)
+			.setParameter("id", id)
+			.executeUpdate();
+	}
 	
 }
