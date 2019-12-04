@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.Collection;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -33,12 +32,6 @@ public abstract class EntityController<T extends EntityService<R,E>, R extends E
 		@Produces("text/plain")
 		public String healthcheck() {
 			return "URI " + context.getRequestUri().toString() + " is OK!";
-		}
-		
-		@GET
-		@Produces(MediaType.APPLICATION_JSON)
-		public Collection<E>  getAll() {
-			return service.getAll();
 		}
 			
 		@GET
@@ -79,6 +72,13 @@ public abstract class EntityController<T extends EntityService<R,E>, R extends E
 			//return service.del(id);
 			service.del(id);
 			return Response.ok("Deleted Successfully").build();
+		}
+		
+		@GET
+		@Path("count")
+		@Produces(MediaType.TEXT_PLAIN)
+		public long getCount() {
+			return service.getCount();
 		}
 	
 }

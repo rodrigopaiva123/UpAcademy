@@ -22,36 +22,29 @@ public class ShelfController extends  EntityController<ShelfService, ShelfReposi
 	@Inject
 	ShelfService service;
 	
-//	@GET
-//	@Path("/product/{id}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<Shelf>  getByProductId(@PathParam("id") long id) {
-//		Collection<Shelf> result;
-//		if (id== 0) {
-//			result = service.getAll();
-//		} else {
-//			result = getByProductId(id);
-//		}
-//		return result;
-//	}
-	
 	@GET
-	@Path("product")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Shelf>  getByProductId(@QueryParam("productId") int productId) {
+	public Collection<Shelf>  getByProductId(@QueryParam("productId") Integer productId) {
 		Collection<Shelf> result;
-		if (productId == 0) {
+		if (productId == null) {
 			result = service.getAll();
 		} else {
-			result = getByProductId(productId);
+			result = service.getByProductId(productId);
 		}
 		return result;
 	}
 	
-//	if (id== null) {
-//		service.getAll();
-//	} else {
-//		return service.getByProductId(id);
-//	}
+	@GET
+	@Path("id")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Long>  getIdByProductId(@QueryParam("productId") Integer productId) {
+		Collection<Long> result;
+		if (productId == null) {
+			result = service.getAllIds();
+		} else {
+			result = service.getIdByProductId(productId);
+		}
+		return result;
+	}
 	
 }

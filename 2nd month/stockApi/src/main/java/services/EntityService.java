@@ -30,12 +30,15 @@ public abstract class EntityService<T extends EntityRepository<E>, E extends Gen
 	
 	@Transactional
 	public E create (E entity) {
-		
 		return repository.createEntity(entity);
 	}
 	
 	public abstract String edit(long id, E entity, boolean isEdit);
 	
 	public abstract String del(long id);
+
+	public long getCount() {
+		return repository.getCount();
+	}
 
 }

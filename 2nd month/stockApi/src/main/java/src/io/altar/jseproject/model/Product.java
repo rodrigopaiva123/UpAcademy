@@ -5,13 +5,15 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQuery(name=Product.GET_ALL_PRODUCTS_QUERY_NAME, query="SELECT p FROM Product p")
-@NamedQuery(name=Product.GET_ALL_PRODUCTS_IDS, query="SELECT p.id FROM Shelf p")
+@NamedQuery(name=Product.GET_ALL_PRODUCTS_IDS, query="SELECT p.id FROM Product p")
+@NamedQuery(name=Product.GET_PRODUCTS_COUNT, query="SELECT COUNT(p) FROM Product p")
 public class Product extends GenericEntity{
 	
 	private static final long serialVersionUID = 1L;
 	
 	public static final String GET_ALL_PRODUCTS_QUERY_NAME = "Product.getAllProducts";
 	public static final String GET_ALL_PRODUCTS_IDS = "Product.getAllShelfIds";
+	public static final String GET_PRODUCTS_COUNT = "Product.getEntityCount";
 	
 	private float price;
 	private float IVA;

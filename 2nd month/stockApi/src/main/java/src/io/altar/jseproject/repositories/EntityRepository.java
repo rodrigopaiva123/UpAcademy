@@ -47,5 +47,9 @@ public abstract class EntityRepository<T extends GenericEntity>{
 		entityManager.remove(entity);
 	}
 	
-	
+	public long getCount() {
+		return entityManager.createNamedQuery(getEntityCount(), Long.class).getSingleResult().longValue();
+	}
+
+	protected abstract String getEntityCount();
 }

@@ -19,7 +19,7 @@ public class ShelfRepository extends EntityRepository<Shelf>{
 		return Shelf.GET_ALL_SHELVES_QUERY_NAME;
 	}
 
-	public List<Shelf> findByProductId(long id) {
+	public List<Shelf> getAllShelvesByProductId(long id) {
 		return entityManager
 				.createNamedQuery(Shelf.GET_SHELVES_BY_PRODUCT_ID_QUERY_NAME, Shelf.class)
 				.setParameter("productId", id)
@@ -29,6 +29,19 @@ public class ShelfRepository extends EntityRepository<Shelf>{
 	@Override
 	protected String getAllEntityIdsQueryName() {
 		return Shelf.GET_ALL_SHELVES_IDS;
+	}
+
+	@Override
+	protected String getEntityCount() {
+		return Shelf.GET_SHELVES_COUNT;
+	}
+
+	public List<Long> getIdByProductId(long id) {
+		return entityManager
+				.createNamedQuery(Shelf.GET_SHELVES_IDS_BY_PRODUCT_ID, Long.class)
+				.setParameter("productId", id)
+				.getResultList();
+		
 	}
 	
 }

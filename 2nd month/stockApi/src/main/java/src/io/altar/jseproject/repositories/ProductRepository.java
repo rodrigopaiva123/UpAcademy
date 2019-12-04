@@ -21,6 +21,11 @@ public class ProductRepository extends EntityRepository<Product>{
 	protected String getAllEntityIdsQueryName() {
 		return Product.GET_ALL_PRODUCTS_IDS;
 	}
+
+	@Override
+	protected String getEntityCount() {
+		return Product.GET_PRODUCTS_COUNT;
+	}
 	
 
 }

@@ -1,7 +1,7 @@
 package services;
 
-import java.util.ArrayList;
-import java.util.Collection;
+
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -17,15 +17,8 @@ public class ShelfService extends EntityService<ShelfRepository, Shelf> {
 	ProductService productService;
 
 	@Transactional
-	public Collection<Shelf> getByProductId(long id) {
-		Collection<Shelf> shelves = new ArrayList<Shelf>();
-		for (Shelf shelf : repository.getAllEntities()) {
-			if (shelf.getProduct().getId() == id) {
-				shelves.add(shelf);
-			}
-		}
-
-		return shelves;
+	public List<Shelf> getByProductId(long id) {  
+		return repository.getAllShelvesByProductId(id);
 	}
 	
 	@Transactional
@@ -60,6 +53,10 @@ public class ShelfService extends EntityService<ShelfRepository, Shelf> {
 	public String del(long shelfId) {
 		repository.removeEntity(shelfId);
 		return "Shelf deleted";
+	}
+
+	public List<Long> getIdByProductId(long id) {
+		return repository.getIdByProductId(id);
 	}
 
 }
